@@ -393,42 +393,20 @@ void main() {
 
 #### Answer: D
 
-This code has **two compilation errors:**
+This code has a **compilation error:**
 
-**Error 1: String + int concatenation**
+**Error: String + int concatenation**
 ```dart
 print("Level: " + level);  // ❌ Can't use + with String and int
 ```
-Fix: Use string interpolation `"Level: $level"` or `level.toString()`
 
-**Error 2: Missing break statement**
-```dart
-case 10:
-  print("Level: " + level);
-case 15:  // ❌ Error: non-empty case must end with break
-```
-In Dart, non-empty switch cases **must** end with `break`, `continue`, `return`, or `throw`.
+In Dart, you cannot concatenate a `String` with an `int` using the `+` operator.
 
-**Key Rule: Switch Fall-through in Dart**
+**Fix options:**
+- String interpolation: `print("Level: $level");`
+- Explicit conversion: `print("Level: " + level.toString());`
 
-| Pattern | Allowed? |
-|---------|----------|
-| Empty cases fall through | ✅ Yes |
-| Non-empty cases fall through | ❌ No (must have break) |
-
-```dart
-// ✅ This is valid (empty fall-through)
-case 1:
-case 5:
-case 10:
-  print("something");
-  break;  // Required after non-empty code!
-
-// ❌ This is NOT valid
-case 10:
-  print("something");
-case 15:  // Error! Missing break above
-```
+**Note:** The empty cases (`case 1:`, `case 5:`, `case 10:`) falling through to share the same code block is valid Dart syntax.
 
 </p>
 </details>
