@@ -606,7 +606,69 @@ int result = func2(myBooks, "Fiction");  // Returns 2
 
 ---
 
-## Question 10: const vs final Keywords
+## Question 10: For Loop with Break and Continue
+
+**What is the output from the following Dart snippet?**
+
+```dart
+void main() {
+  int n = 0;
+  for (;; n++) {
+    if (n == 6) break;
+    if (n % 2 == 0) {
+      continue;
+    }
+    print('*');
+  }
+}
+```
+
+**Options:**
+- A: * (printed 6 times)
+- B: * (printed 4 times)
+- C: * (printed 3 times)
+- D: * (printed 2 times)
+
+<details>
+<summary>Click to reveal answer</summary>
+
+### Answer: C
+
+**\* (printed 3 times)**
+
+### Explanation
+
+**Understanding the for loop:**
+- `for (;; n++)` is an **infinite loop** - the `;;` means no initialization and no condition
+- The loop runs forever until `break` is hit
+- `n` starts at 0 and increments each iteration
+
+**Trace through the loop:**
+
+| n | n == 6? | n % 2 == 0? (even?) | Action | Output |
+|---|---------|---------------------|--------|--------|
+| 0 | No | Yes (even) | continue (skip print) | - |
+| 1 | No | No (odd) | print('*') | **\*** |
+| 2 | No | Yes (even) | continue (skip print) | - |
+| 3 | No | No (odd) | print('*') | **\*** |
+| 4 | No | Yes (even) | continue (skip print) | - |
+| 5 | No | No (odd) | print('*') | **\*** |
+| 6 | Yes | - | break (exit loop) | - |
+
+**Key insight:** Only **odd numbers** (1, 3, 5) reach the print statement. Even numbers trigger `continue`.
+
+**Output:** `*` printed 3 times (for n = 1, 3, 5)
+
+**Key Concepts:**
+- `for (;;)` creates an infinite loop (equivalent to `while(true)`)
+- `break` exits the loop immediately
+- `continue` skips to the next iteration without executing remaining code
+
+</details>
+
+---
+
+## Question 11: const vs final Keywords
 
 **In the Dart snippet below, which line(s) will cause an error?**
 
@@ -668,5 +730,307 @@ A literal is a fixed value written directly in code (e.g., `5`, `"Hello"`, `true
 - `final` can use anything (const, final, or runtime values)
 
 </details>
+
+---
+
+# Dart & Flutter Quick Recap
+
+A quick reference guide covering essential concepts for your exam.
+
+---
+
+## 1. Flutter App Structure
+
+### AppBar
+- The **horizontal region at the top** of a mobile app
+- Contains title, navigation icons, action buttons
+```dart
+Scaffold(
+  appBar: AppBar(title: Text('My App')),
+)
+```
+
+### Scaffold Properties
+| Property | Description |
+|----------|-------------|
+| `appBar` | Top navigation bar |
+| `body` | Main content area |
+| `floatingActionButton` | FAB button |
+| `drawer` | Side navigation menu |
+| `bottomNavigationBar` | Bottom nav bar |
+
+**NOT a Scaffold property:** `home`, `title`, `theme` (these belong to MaterialApp)
+
+### MaterialApp Properties
+| Property | Description |
+|----------|-------------|
+| `home` | The default route widget |
+| `title` | App title (shown in task manager) |
+| `theme` | App-wide theme data |
+| `routes` | Named route definitions |
+| `debugShowCheckedModeBanner` | Show/hide debug banner |
+
+---
+
+## 2. Dart Basics
+
+### File Extension
+- Dart files use the **`.dart`** extension
+- Example: `main.dart`, `home_page.dart`
+
+### Data Types in Dart
+| Type | Example | Description |
+|------|---------|-------------|
+| `int` | `42` | Whole numbers |
+| `double` | `3.14` | Decimal numbers |
+| `String` | `'Hello'` | Text |
+| `bool` | `true` | True/false |
+| `List` | `[1, 2, 3]` | Ordered collection |
+| `Map` | `{'a': 1}` | Key-value pairs |
+| `Set` | `{1, 2, 3}` | Unique values only |
+
+**NOT a data type:** `char`, `float`, `array`
+
+### Variable Keywords
+| Keyword | Reassign? | Modify Contents? | When Set? |
+|---------|-----------|------------------|-----------|
+| `var` | Yes | Yes | Runtime |
+| `final` | No | Yes (for collections) | Runtime |
+| `const` | No | No | Compile-time |
+
+```dart
+var x = 10;      // Can change: x = 20; ✓
+final y = 10;    // Cannot change: y = 20; ✗
+const z = 10;    // Cannot change: z = 20; ✗
+```
+
+---
+
+## 3. Functions
+
+### main() Function
+- **Entry point** of every Dart/Flutter application
+- The app starts executing from here
+```dart
+void main() {
+  runApp(MyApp());  // Starts the Flutter app
+}
+```
+
+### print() Method
+- Takes an **Object** as parameter (any type)
+- Converts it to String and outputs to console
+```dart
+print('Hello');     // String
+print(42);          // int
+print(true);        // bool
+print([1, 2, 3]);   // List
+```
+
+### trim() Function
+- Removes **leading and trailing spaces** from a String
+```dart
+String text = '  Hello World  ';
+print(text.trim());  // Output: 'Hello World'
+```
+
+---
+
+## 4. Widgets
+
+### What is a Widget?
+- **Everything in Flutter is a widget**
+- A widget is a **UI building block** that describes part of the user interface
+- Widgets can be combined to build complex UIs
+
+### Widget Naming Conventions
+| Element | Convention | Example |
+|---------|------------|---------|
+| Widget class name | **Capital letter** (PascalCase) | `MyButton`, `HomePage` |
+| Property name | **lowercase** (camelCase) | `backgroundColor`, `fontSize` |
+
+```dart
+class MyWidget extends StatelessWidget {  // Capital M
+  final String title;  // lowercase t
+}
+```
+
+### Property Sequence
+- The **order of properties does NOT matter** in Flutter
+- Both are identical:
+```dart
+// These are the same:
+Text('Hi', style: TextStyle(), textAlign: TextAlign.center)
+Text('Hi', textAlign: TextAlign.center, style: TextStyle())
+```
+
+### Property Separator
+- Properties are separated by a **comma** `,`
+```dart
+Container(
+  width: 100,      // comma
+  height: 200,     // comma
+  color: Colors.blue,  // trailing comma (optional but recommended)
+)
+```
+
+---
+
+## 5. Common Widgets
+
+### Padding Widget
+- Adds **empty space around** a child widget
+- Creates visual spacing/margins
+```dart
+Padding(
+  padding: EdgeInsets.all(16.0),
+  child: Text('Hello'),
+)
+```
+
+### TextStyle Properties
+| Property | Description | Example |
+|----------|-------------|---------|
+| `fontSize` | Text size | `fontSize: 20` |
+| `fontWeight` | Bold, normal, etc. | `fontWeight: FontWeight.bold` |
+| `color` | Text color | `color: Colors.red` |
+| `fontStyle` | Italic, normal | `fontStyle: FontStyle.italic` |
+| `letterSpacing` | Space between letters | `letterSpacing: 2.0` |
+
+```dart
+Text(
+  'Hello',
+  style: TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: Colors.blue,
+  ),
+)
+```
+
+---
+
+## 6. Object-Oriented Programming
+
+### Inheritance (extends)
+- Use **`extends`** keyword to create a subclass
+- Subclass inherits properties and methods from parent
+```dart
+class Animal {
+  void eat() => print('Eating');
+}
+
+class Dog extends Animal {  // Dog inherits from Animal
+  void bark() => print('Woof!');
+}
+```
+
+---
+
+## 7. Collections
+
+### Set - No Duplicates!
+- A Set only stores **unique values**
+- If you add a duplicate, it is **ignored** (no error, just not added)
+```dart
+Set<int> numbers = {1, 2, 3};
+numbers.add(2);  // Duplicate - ignored!
+print(numbers);  // Output: {1, 2, 3}
+print(numbers.length);  // Output: 3
+```
+
+### List vs Set vs Map
+| Collection | Duplicates? | Ordered? | Access |
+|------------|-------------|----------|--------|
+| List | Yes | Yes | By index `[0]` |
+| Set | No | No | By value |
+| Map | Keys: No | No | By key `['name']` |
+
+---
+
+## 8. pubspec.yaml
+
+### Purpose
+- **Configuration file** for Flutter/Dart projects
+- Defines:
+  - Project name and description
+  - Dependencies (packages)
+  - Assets (images, fonts)
+  - SDK version constraints
+
+```yaml
+name: my_app
+description: A Flutter application
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^0.13.0  # External package
+
+flutter:
+  assets:
+    - images/logo.png
+```
+
+---
+
+## 9. Loop Control
+
+### for Loop Syntax
+```dart
+for (initialization; condition; increment) {
+  // code
+}
+
+// Infinite loop (no condition):
+for (;;) {
+  // runs forever until break
+}
+```
+
+### break vs continue
+| Keyword | What it does |
+|---------|--------------|
+| `break` | **Exit** the loop completely |
+| `continue` | **Skip** current iteration, go to next |
+
+```dart
+for (int i = 0; i < 5; i++) {
+  if (i == 2) continue;  // Skip when i is 2
+  if (i == 4) break;     // Exit when i is 4
+  print(i);
+}
+// Output: 0, 1, 3
+```
+
+---
+
+## 10. Null Safety Operators
+
+| Operator | Name | Example | What it does |
+|----------|------|---------|--------------|
+| `?` | Nullable type | `String? name` | Variable can be null |
+| `?.` | Null-aware access | `name?.length` | Returns null if name is null |
+| `??` | Null coalescing | `name ?? 'Guest'` | Use 'Guest' if name is null |
+| `!` | Null assertion | `name!.length` | Force unwrap (crashes if null!) |
+
+---
+
+## Quick Answer Reference
+
+| Question | Answer |
+|----------|--------|
+| Horizontal region at top of app? | **AppBar** |
+| File extension for Dart? | **`.dart`** |
+| Keyword for subclass? | **`extends`** |
+| Remove leading/trailing spaces? | **`trim()`** |
+| print() takes what type? | **Object** |
+| Add duplicate to Set? | **Ignored (not added)** |
+| Properties separator? | **Comma (`,`)** |
+| Widget names start with? | **Capital letter** |
+| Property order matters? | **No** |
+| Purpose of Padding? | **Add space around child** |
+| Purpose of pubspec.yaml? | **Project configuration** |
+| Purpose of main()? | **Entry point of app** |
 
 ---
